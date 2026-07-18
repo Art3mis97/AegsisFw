@@ -27,14 +27,17 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
       - name: Install package with dev dependencies
-        run: pip install -e ".[dev]"
+        run: python -m pip install -e ".[dev]"
 
       - name: Verify package import
         run: python -c "import aegisfw; print(f'aegisfw {aegisfw.__version__}')"
 
       - name: Run tests
-        run: pytest -v
+        run: pytest
 
       - name: Run linter
         run: ruff check src/ tests/

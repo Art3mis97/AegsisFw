@@ -13,6 +13,26 @@ AegisFW is an open-source tool designed to give Linux system administrators a cl
 
 Python provides the management layer — configuration loading, validation, rule generation, and safe deployment. nftables remains responsible for actual packet filtering.
 
+## Current Status
+
+Currently implemented:
+
+- Project structure
+- Packaging and installation
+- Development tooling
+- Continuous Integration (GitHub Actions)
+- Code quality checks (Ruff)
+- Unit testing framework
+
+Not yet implemented:
+
+- Firewall engine
+- Configuration engine
+- nftables integration
+- Command-Line Interface
+- Logging
+- Monitoring
+
 ## Goals
 
 - Provide a professional, easy-to-use firewall management interface for Linux hosts.
@@ -47,6 +67,19 @@ Python provides the management layer — configuration loading, validation, rule
 - **Firewall Backend:** nftables
 - **Packaging:** setuptools with src-layout
 
+## Architecture
+
+AegisFW is composed of independent modules:
+
+- **Configuration Engine** — loads and validates firewall configuration.
+- **Rule Engine** — models firewall rules and policies.
+- **nftables Backend** — generates and applies nftables rulesets.
+- **Command-Line Interface** — provides administrative control.
+- **Logging** — records firewall events and management actions.
+- **Dashboard** — future web-based monitoring interface.
+
+This modular architecture improves maintainability and testing by keeping each component focused on a single responsibility.
+
 ## Development Setup
 
 ### Prerequisites
@@ -61,7 +94,7 @@ git clone https://github.com/Art3mis97/AegisFW.git
 cd AegisFW
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -e ".[dev]"
+python -m pip install -e ".[dev]"
 ```
 
 ### Running Checks
