@@ -1,0 +1,71 @@
+# ==========================================================================
+# AegisFW — Example Configuration
+# ==========================================================================
+#
+# Copy this file and adjust to your needs:
+#
+#   cp config/aegisfw.example.yaml /etc/aegisfw/aegisfw.yaml
+#
+# All sections are optional. Missing sections use safe defaults.
+#
+
+# --------------------------------------------------------------------------
+# Firewall — Default chain policies
+# --------------------------------------------------------------------------
+# Each policy must be one of: accept, drop, reject
+#
+firewall:
+  default_input: drop        # Drop unsolicited inbound traffic
+  default_output: accept     # Allow all outbound traffic
+  default_forward: drop      # Drop forwarded traffic (host firewall)
+
+# --------------------------------------------------------------------------
+# Logging
+# --------------------------------------------------------------------------
+# level must be one of: debug, info, warning, error, critical
+#
+logging:
+  enabled: true
+  level: info
+
+# --------------------------------------------------------------------------
+# Rules — Ordered list of firewall rules
+# --------------------------------------------------------------------------
+# Required fields per rule:
+#   name      — A unique descriptive name (non-empty string)
+#   action    — One of: allow, deny, reject
+#   protocol  — One of: tcp, udp, icmp, any
+#
+# Optional fields:
+#   port      — Integer 1–65535 (required for tcp/udp, omit for icmp/any)
+#   source    — 'any', an IP address, or a CIDR network (default: any)
+#
+rules:
+  - name: allow-ssh
+    action: allow
+    protocol: tcp
+    port: 22
+    source: any
+
+  - name: allow-http
+    action: allow
+    protocol: tcp
+    port: 80
+    source: any
+
+  - name: allow-https
+    action: allow
+    protocol: tcp
+    port: 443
+    source: any
+
+  - name: allow-dns-udp
+    action: allow
+    protocol: udp
+    port: 53
+    source: any
+
+  - name: allow-icmp
+    action: allow
+    protocol: icmp
+    source: any

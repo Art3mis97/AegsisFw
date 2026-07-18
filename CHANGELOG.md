@@ -15,3 +15,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 - Minimal `aegisfw` Python package with version metadata.
 - Basic test suite validating package structure.
 - GitHub Actions CI workflow for testing and linting.
+- Configuration engine: YAML loading, validation, and typed models.
+- Custom exception hierarchy for configuration errors.
+- Dataclass models for firewall policies, logging, and rules.
+- Source validation supporting IPv4, IPv6, and CIDR networks.
+- Annotated example configuration file (`config/aegisfw.example.yaml`).
+- Comprehensive configuration test suite.
+- PyYAML runtime dependency.

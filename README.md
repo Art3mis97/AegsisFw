@@ -23,11 +23,11 @@ Currently implemented:
 - Continuous Integration (GitHub Actions)
 - Code quality checks (Ruff)
 - Unit testing framework
+- Configuration engine (YAML loading and validation)
 
 Not yet implemented:
 
 - Firewall engine
-- Configuration engine
 - nftables integration
 - Command-Line Interface
 - Logging
@@ -46,7 +46,7 @@ Not yet implemented:
 | Phase | Description | Status |
 |-------|-------------|--------|
 | 0 | Project Foundation | ✅ Complete |
-| 1 | Configuration Engine | 🔲 Planned |
+| 1 | Configuration Engine | ✅ Complete |
 | 2 | Rule and Policy Engine | 🔲 Planned |
 | 3 | nftables Backend | 🔲 Planned |
 | 4 | Command-Line Interface | 🔲 Planned |
@@ -79,6 +79,24 @@ AegisFW is composed of independent modules:
 - **Dashboard** — future web-based monitoring interface.
 
 This modular architecture improves maintainability and testing by keeping each component focused on a single responsibility.
+
+## Usage
+
+Load and validate a configuration file:
+
+```python
+from aegisfw.config import load_config
+
+config = load_config("config/aegisfw.example.yaml")
+
+print(config.firewall.default_input)   # "drop"
+print(config.logging.level)            # "info"
+
+for rule in config.rules:
+    print(f"{rule.name}: {rule.action} {rule.protocol}/{rule.port}")
+```
+
+See `config/aegisfw.example.yaml` for the full configuration format.
 
 ## Development Setup
 

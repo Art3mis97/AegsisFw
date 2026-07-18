@@ -25,6 +25,9 @@ classifiers = [
     "Topic :: System :: Networking :: Firewalls",
     "Topic :: Security",
 ]
+dependencies = [
+    "PyYAML>=6.0",
+]
 
 [project.urls]
 Homepage = "https://github.com/Art3mis97/AegisFW"
