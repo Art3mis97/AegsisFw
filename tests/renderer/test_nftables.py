@@ -127,9 +127,7 @@ class TestDefaultPolicyRendering:
         lines = result.splitlines()
 
         # Find the input chain section.
-        input_start = next(
-            i for i, line in enumerate(lines) if "chain input" in line
-        )
+        input_start = next(i for i, line in enumerate(lines) if "chain input" in line)
         input_end = next(
             i for i in range(input_start + 1, len(lines)) if lines[i].strip() == "}"
         )
@@ -152,9 +150,7 @@ class TestDefaultPolicyRendering:
         result = renderer.render(policy)
         lines = result.splitlines()
 
-        output_start = next(
-            i for i, line in enumerate(lines) if "chain output" in line
-        )
+        output_start = next(i for i, line in enumerate(lines) if "chain output" in line)
         output_end = next(
             i for i in range(output_start + 1, len(lines)) if lines[i].strip() == "}"
         )
