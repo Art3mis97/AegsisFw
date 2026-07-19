@@ -22,3 +22,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 - Annotated example configuration file (`config/aegisfw.example.yaml`).
 - Comprehensive configuration test suite.
 - PyYAML runtime dependency.
+- Internal firewall policy engine with immutable domain models.
+- `compile_policy()` function converting configuration into `FirewallPolicy`.
+- Domain enums: `RuleAction`, `NetworkProtocol`, `DefaultPolicy`.
+- Frozen dataclasses: `FirewallRule`, `DefaultPolicies`, `FirewallPolicy`.
+- Duplicate rule name detection during policy compilation.
+- Policy-specific exception hierarchy.
+- Comprehensive policy compiler test suite.

@@ -24,10 +24,10 @@ Currently implemented:
 - Code quality checks (Ruff)
 - Unit testing framework
 - Configuration engine (YAML loading and validation)
+- Policy engine (internal firewall policy model and compiler)
 
 Not yet implemented:
 
-- Firewall engine
 - nftables integration
 - Command-Line Interface
 - Logging
@@ -47,7 +47,7 @@ Not yet implemented:
 |-------|-------------|--------|
 | 0 | Project Foundation | ✅ Complete |
 | 1 | Configuration Engine | ✅ Complete |
-| 2 | Rule and Policy Engine | 🔲 Planned |
+| 2 | Rule and Policy Engine | ✅ Complete |
 | 3 | nftables Backend | 🔲 Planned |
 | 4 | Command-Line Interface | 🔲 Planned |
 | 5 | Logging and Monitoring | 🔲 Planned |
@@ -97,6 +97,22 @@ for rule in config.rules:
 ```
 
 See `config/aegisfw.example.yaml` for the full configuration format.
+
+Compile configuration into an internal firewall policy:
+
+```python
+from aegisfw.config import load_config
+from aegisfw.policy import compile_policy
+
+config = load_config("config/aegisfw.example.yaml")
+policy = compile_policy(config)
+
+print(policy.defaults.input)       # DefaultPolicy.DROP
+print(policy.rules[0].action)      # RuleAction.ALLOW
+print(policy.rules[0].protocol)    # NetworkProtocol.TCP
+```
+
+The compiled policy is immutable and backend-independent. nftables rule generation will be added in Phase 3.
 
 ## Development Setup
 
