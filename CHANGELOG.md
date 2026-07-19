@@ -29,3 +29,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/), and this
 - Duplicate rule name detection during policy compilation.
 - Policy-specific exception hierarchy.
 - Comprehensive policy compiler test suite.
+- `NftablesRenderer` class generating complete nftables rulesets from `FirewallPolicy`.
+- Support for TCP, UDP, ICMP, and ANY protocol rendering.
+- Support for IPv4 address and CIDR source rendering.
+- Action mapping: ALLOW→accept, DENY→drop, REJECT→reject.
+- Comprehensive nftables renderer test suite with snapshot verification.

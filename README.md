@@ -25,10 +25,11 @@ Currently implemented:
 - Unit testing framework
 - Configuration engine (YAML loading and validation)
 - Policy engine (internal firewall policy model and compiler)
+- nftables renderer (ruleset generation, no execution)
 
 Not yet implemented:
 
-- nftables integration
+- Firewall rule application (nft execution)
 - Command-Line Interface
 - Logging
 - Monitoring
@@ -48,7 +49,7 @@ Not yet implemented:
 | 0 | Project Foundation | ✅ Complete |
 | 1 | Configuration Engine | ✅ Complete |
 | 2 | Rule and Policy Engine | ✅ Complete |
-| 3 | nftables Backend | 🔲 Planned |
+| 3 | nftables Backend | ✅ Complete |
 | 4 | Command-Line Interface | 🔲 Planned |
 | 5 | Logging and Monitoring | 🔲 Planned |
 | 6 | Advanced Security Features | 🔲 Planned |
@@ -112,7 +113,24 @@ print(policy.rules[0].action)      # RuleAction.ALLOW
 print(policy.rules[0].protocol)    # NetworkProtocol.TCP
 ```
 
-The compiled policy is immutable and backend-independent. nftables rule generation will be added in Phase 3.
+The compiled policy is immutable and backend-independent.
+
+Render the policy as an nftables ruleset:
+
+```python
+from aegisfw.config import load_config
+from aegisfw.policy import compile_policy
+from aegisfw.renderer import NftablesRenderer
+
+config = load_config("config/aegisfw.example.yaml")
+policy = compile_policy(config)
+
+renderer = NftablesRenderer()
+ruleset = renderer.render(policy)
+print(ruleset)
+```
+
+The renderer generates nftables syntax but does not execute any commands. Applying the ruleset to the system will be handled by a future phase.
 
 ## Development Setup
 
