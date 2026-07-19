@@ -388,6 +388,51 @@ rules:
 
 
 # ---------------------------------------------------------------------------
+# Port-protocol compatibility tests
+# ---------------------------------------------------------------------------
+
+
+class TestPortProtocolCompatibility:
+    """Tests for port-protocol validation rules."""
+
+    def test_tcp_with_port_accepted(self) -> None:
+        """TCP with a valid port is accepted."""
+        rule = RuleConfig(name="tcp-rule", action="allow", protocol="tcp", port=80)
+        assert rule.port == 80
+
+    def test_udp_with_port_accepted(self) -> None:
+        """UDP with a valid port is accepted."""
+        rule = RuleConfig(name="udp-rule", action="allow", protocol="udp", port=53)
+        assert rule.port == 53
+
+    def test_icmp_without_port_accepted(self) -> None:
+        """ICMP without a port is accepted."""
+        rule = RuleConfig(name="icmp-rule", action="allow", protocol="icmp")
+        assert rule.port is None
+
+    def test_any_without_port_accepted(self) -> None:
+        """ANY without a port is accepted."""
+        rule = RuleConfig(name="any-rule", action="allow", protocol="any")
+        assert rule.port is None
+
+    def test_icmp_with_port_rejected(self) -> None:
+        """ICMP with a port raises ConfigurationValidationError."""
+        with pytest.raises(
+            ConfigurationValidationError,
+            match="Port is not allowed for rule 'icmp-rule' with protocol 'icmp'",
+        ):
+            RuleConfig(name="icmp-rule", action="allow", protocol="icmp", port=80)
+
+    def test_any_with_port_rejected(self) -> None:
+        """ANY with a port raises ConfigurationValidationError."""
+        with pytest.raises(
+            ConfigurationValidationError,
+            match="Port is not allowed for rule 'any-rule' with protocol 'any'",
+        ):
+            RuleConfig(name="any-rule", action="allow", protocol="any", port=80)
+
+
+# ---------------------------------------------------------------------------
 # Source validation tests
 # ---------------------------------------------------------------------------
 

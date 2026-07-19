@@ -157,6 +157,12 @@ class RuleConfig:
 
         # Port validation.
         if self.port is not None:
+            if self.protocol not in ("tcp", "udp"):
+                raise ConfigurationValidationError(
+                    f"Port is not allowed for rule '{self.name}' "
+                    f"with protocol '{self.protocol}'. "
+                    "Ports are only valid for tcp and udp."
+                )
             if not isinstance(self.port, int) or isinstance(self.port, bool):
                 raise ConfigurationValidationError(
                     f"Invalid port for rule '{self.name}': '{self.port}'. "
